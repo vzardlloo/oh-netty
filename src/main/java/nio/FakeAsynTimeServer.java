@@ -1,13 +1,12 @@
 package nio;
 
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-/**
- * 同步阻塞的TimeServer
- */
-public class TimeServer {
+public class FakeAsynTimeServer {
+
     public static void main(String[] args) throws IOException {
         int port = 8080;
         if (args != null && args.length > 0) {
@@ -22,9 +21,10 @@ public class TimeServer {
             server = new ServerSocket(port);
             System.out.println("The time server is start at port: " + port);
             Socket socket = null;
+            TimeServerHandlerExecutePool timeServerHandlerExecutePool = new TimeServerHandlerExecutePool(50, 1000);
             while (true) {
                 socket = server.accept();
-                new Thread(new TimeServerHandler(socket)).start();
+                timeServerHandlerExecutePool.execute(new TimeServerHandler(socket));
             }
         } finally {
             if (server != null) {
@@ -32,10 +32,10 @@ public class TimeServer {
                 server.close();
                 server = null;
             }
-
         }
 
 
     }
+
 
 }
