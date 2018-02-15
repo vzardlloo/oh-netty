@@ -67,6 +67,12 @@ public class NIOTimeClientHandle implements Runnable {
 
     }
 
+    /**
+     * 将req写入通道
+     *
+     * @param sc
+     * @throws IOException
+     */
     private void doWrite(SocketChannel sc) throws IOException {
         byte[] req = "QUERY TIME ORDER".getBytes();
         ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
@@ -107,6 +113,7 @@ public class NIOTimeClientHandle implements Runnable {
                     readBuffer.get(bytes);
                     String body = new String(bytes, "UTF-8");
                     System.out.println("Now is : " + body);
+                    //传输完成
                     this.stop = true;
                 } else if (readBytes < 0) {
                     key.channel();
