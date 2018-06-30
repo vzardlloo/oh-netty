@@ -98,6 +98,9 @@ class NIORequest implements Runnable {
         LockSupport.parkNanos(1000 * 1000 * 1000);
         byte[] msg = "hello".getBytes();
         LockSupport.parkNanos(1000 * 1000 * 1000);
+        LockSupport.parkNanos(1000 * 1000 * 1000);
+        LockSupport.parkNanos(1000 * 1000 * 1000);
+        LockSupport.parkNanos(1000 * 1000 * 1000);
         ByteBuffer buffer = ByteBuffer.allocate(msg.length);
         buffer.put(msg);
         buffer.flip();
